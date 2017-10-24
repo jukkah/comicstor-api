@@ -1,0 +1,27 @@
+version: '3'
+
+services:
+  db:
+    build:
+      context: docker/db
+    ports:
+      - 5432:5432
+    volumes:
+      - db-data:/var/lib/postgresql/data
+      - ./:/code
+      - ./docker/db/entrypoint.sh:/usr/local/bin/entrypoint.sh
+    environment:
+      POSTGRES_PASSWORD: example
+  api:
+    build:
+      context: docker/api
+    volumes:
+      - ./:/code
+      - ./docker/api/entrypoint.sh:/usr/local/bin/entrypoint.sh
+    depends_on:
+      - db
+    ports:
+      - 5000:5000
+
+volumes:
+  db-data:
