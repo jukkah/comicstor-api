@@ -1,4 +1,4 @@
--- depends_on: versions.sql roles.sql schemas.sql
+-- depends_on: types.sql
 
 CREATE EXTENSION IF NOT EXISTS pgcrypto;
 
@@ -25,12 +25,6 @@ BEGIN
       user_id  INTEGER PRIMARY KEY REFERENCES comicstor.user (id) ON DELETE CASCADE,
       email CHARACTER VARYING(254) NOT NULL UNIQUE CHECK (email ~* '^.+@.+\..+$'),
       password_hash CHARACTER(60) NOT NULL
-    );
-
-    -- JWT token type used in authentication
-    CREATE TYPE comicstor.JWT_TOKEN AS (
-      role    TEXT,
-      user_id INTEGER
     );
 
   END IF;
@@ -121,9 +115,10 @@ USING (TRUE);
 DROP POLICY IF EXISTS update_user ON comicstor.user;
 CREATE POLICY update_user
 ON comicstor.user FOR UPDATE TO comicstor_user
-USING (id = current_setting('jwt.claims.user_id') :: INTEGER);
+USING (id = comicstor.current_user_id())
+WITH CHECK (id = comicstor.current_user_id());
 
 DROP POLICY IF EXISTS delete_user ON comicstor.user;
 CREATE POLICY delete_user
 ON comicstor.user FOR DELETE TO comicstor_user
-USING (id = current_setting('jwt.claims.user_id') :: INTEGER);
+USING (id = comicstor.current_user_id());

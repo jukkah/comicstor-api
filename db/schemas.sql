@@ -1,4 +1,4 @@
--- depends_on: versions.sql roles.sql
+-- depends_on: roles.sql
 
 DO LANGUAGE plpgsql $wrapper$
 BEGIN

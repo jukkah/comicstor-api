@@ -15,7 +15,7 @@ SELECT is_empty(
 
 SELECT results_eq(
   'select comicstor.register(''jukkah'', ''jukkah@dev.null'', ''a good password is easy to remember but hard to brute force'')',
-  ARRAY [(1, 'jukkah') :: comicstor.USER],
+  ARRAY [(1, 'jukkah') :: comicstor.user],
   'WHEN: User jukkah is registered'
 );
 
