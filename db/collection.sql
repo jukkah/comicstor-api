@@ -18,6 +18,7 @@ END;
 $wrapper$;
 
 GRANT INSERT, SELECT, UPDATE, DELETE ON TABLE comicstor.collection TO comicstor_user;
+GRANT USAGE ON SEQUENCE comicstor.collection_id_seq TO comicstor_user;
 ALTER TABLE comicstor.collection ENABLE ROW LEVEL SECURITY;
 
 DROP POLICY IF EXISTS all_collection ON comicstor.collection;
