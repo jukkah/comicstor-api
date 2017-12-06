@@ -16,10 +16,6 @@ BEGIN
       name CHARACTER VARYING(20) NOT NULL
     );
 
-    GRANT SELECT ON TABLE comicstor.user TO comicstor_anonymous, comicstor_user;
-    GRANT UPDATE, DELETE ON TABLE comicstor.user TO comicstor_user;
-    ALTER TABLE comicstor.user ENABLE ROW LEVEL SECURITY;
-
     -- Private part of table for user account
     CREATE TABLE comicstor_private.user_account (
       user_id  INTEGER PRIMARY KEY REFERENCES comicstor.user (id) ON DELETE CASCADE,
@@ -31,6 +27,26 @@ BEGIN
 
 END;
 $wrapper$;
+
+GRANT SELECT ON TABLE comicstor.user TO comicstor_anonymous, comicstor_user;
+GRANT UPDATE, DELETE ON TABLE comicstor.user TO comicstor_user;
+ALTER TABLE comicstor.user ENABLE ROW LEVEL SECURITY;
+
+DROP POLICY IF EXISTS select_user ON comicstor.user;
+CREATE POLICY select_user
+  ON comicstor.user FOR SELECT
+USING (TRUE);
+
+DROP POLICY IF EXISTS update_user ON comicstor.user;
+CREATE POLICY update_user
+  ON comicstor.user FOR UPDATE TO comicstor_user
+USING (id = comicstor.current_user_id())
+WITH CHECK (id = comicstor.current_user_id());
+
+DROP POLICY IF EXISTS delete_user ON comicstor.user;
+CREATE POLICY delete_user
+  ON comicstor.user FOR DELETE TO comicstor_user
+USING (id = comicstor.current_user_id());
 
 --------------------------------------------------------------------------------
 
@@ -104,21 +120,3 @@ CREATE FUNCTION comicstor.current_user() RETURNS comicstor.user AS $$
 $$ LANGUAGE SQL STABLE;
 
 GRANT EXECUTE ON FUNCTION comicstor.current_user() TO comicstor_anonymous, comicstor_user;
-
---------------------------------------------------------------------------------
-
-DROP POLICY IF EXISTS select_user ON comicstor.user;
-CREATE POLICY select_user
-ON comicstor.user FOR SELECT
-USING (TRUE);
-
-DROP POLICY IF EXISTS update_user ON comicstor.user;
-CREATE POLICY update_user
-ON comicstor.user FOR UPDATE TO comicstor_user
-USING (id = comicstor.current_user_id())
-WITH CHECK (id = comicstor.current_user_id());
-
-DROP POLICY IF EXISTS delete_user ON comicstor.user;
-CREATE POLICY delete_user
-ON comicstor.user FOR DELETE TO comicstor_user
-USING (id = comicstor.current_user_id());

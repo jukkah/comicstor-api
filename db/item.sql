@@ -14,13 +14,13 @@ BEGIN
       item_prototype_id INTEGER NOT NULL REFERENCES comicstor.item_prototype (id) ON DELETE CASCADE
     );
 
-    GRANT INSERT, SELECT, UPDATE, DELETE ON TABLE comicstor.item TO comicstor_user;
-    ALTER TABLE comicstor.item ENABLE ROW LEVEL SECURITY;
-
   END IF;
 
 END;
 $wrapper$;
+
+GRANT INSERT, SELECT, UPDATE, DELETE ON TABLE comicstor.item TO comicstor_user;
+ALTER TABLE comicstor.item ENABLE ROW LEVEL SECURITY;
 
 DROP POLICY IF EXISTS all_item ON comicstor.item;
 CREATE POLICY all_item

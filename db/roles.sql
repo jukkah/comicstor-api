@@ -1,23 +1,19 @@
 -- depends_on: versions.sql
 
-DO LANGUAGE plpgsql $wrapper$
-BEGIN
+-- Internal user for connecting from api to db
+DROP OWNED BY comicstor_postgraphql CASCADE;
+DROP ROLE IF EXISTS comicstor_postgraphql;
+CREATE ROLE comicstor_postgraphql LOGIN PASSWORD 'xyz';
 
-  IF NOT _v.is_executed('roles.sql', 'initial-version') THEN
-    PERFORM _v.set_executed('roles.sql', 'initial-version');
+-- Anonymous user role
+DROP OWNED BY comicstor_anonymous CASCADE;
+DROP ROLE IF EXISTS comicstor_anonymous;
+CREATE ROLE comicstor_anonymous;
 
-    -- Internal user for connecting from api to db
-    CREATE ROLE comicstor_postgraphql LOGIN PASSWORD 'xyz';
+-- Authenticated user role
+DROP OWNED BY comicstor_user CASCADE;
+DROP ROLE IF EXISTS comicstor_user;
+CREATE ROLE comicstor_user;
 
-    -- Anonymous user role
-    CREATE ROLE comicstor_anonymous;
-    GRANT comicstor_anonymous TO comicstor_postgraphql;
-
-    -- Authenticated user role
-    CREATE ROLE comicstor_user;
-    GRANT comicstor_user TO comicstor_postgraphql;
-
-  END IF;
-
-END;
-$wrapper$;
+GRANT comicstor_anonymous TO comicstor_postgraphql;
+GRANT comicstor_user TO comicstor_postgraphql;

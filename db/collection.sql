@@ -12,13 +12,13 @@ BEGIN
       owner_id INTEGER NOT NULL REFERENCES comicstor.user (id) ON DELETE CASCADE
     );
 
-    GRANT INSERT, SELECT, UPDATE, DELETE ON TABLE comicstor.collection TO comicstor_user;
-    ALTER TABLE comicstor.collection ENABLE ROW LEVEL SECURITY;
-
   END IF;
 
 END;
 $wrapper$;
+
+GRANT INSERT, SELECT, UPDATE, DELETE ON TABLE comicstor.collection TO comicstor_user;
+ALTER TABLE comicstor.collection ENABLE ROW LEVEL SECURITY;
 
 DROP POLICY IF EXISTS all_collection ON comicstor.collection;
 CREATE POLICY all_collection
