@@ -1,3 +1,3 @@
 #!/bin/sh
 
-load-schema.sh
+sh load-schema.sh
