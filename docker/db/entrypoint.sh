@@ -8,6 +8,6 @@ done
 
 set -e
 
-sh /code/load-schema.sh
+sh load-schema.sh
 
 wait

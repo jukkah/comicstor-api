@@ -59,3 +59,5 @@ RUN echo "=============================== Installing pguri =====================
     make install                                                                            && \
     cd ..                                                                                   && \
     rm -rf pguri
+
+WORKDIR /code

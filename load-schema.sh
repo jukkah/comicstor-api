@@ -2,8 +2,8 @@
 
 set -e
 
-DIR="/code/db"
-FILES=$(/code/prepare-files.sh $DIR/*.sql | tsort | tac)
+DIR="$(pwd)/db"
+FILES=$(sh prepare-files.sh $DIR/*.sql | tsort | tac)
 
 TRANSACTION=""
 
