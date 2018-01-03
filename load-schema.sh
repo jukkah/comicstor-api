@@ -12,11 +12,15 @@ do
     TRANSACTION="$TRANSACTION $(cat $DIR/$FILE)"
 done
 
-psql -q -v ON_ERROR_STOP=1 -U postgres -d postgres <<EOF
+echo "
     BEGIN;
     SET local client_min_messages TO WARNING;
     $TRANSACTION
     COMMIT;
-EOF
+" > /tmp/import.sql
+
+node import.js
+
+rm /tmp/import.sql
 
 echo "Database schema updated successfully"

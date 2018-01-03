@@ -60,4 +60,6 @@ RUN echo "=============================== Installing pguri =====================
     cd ..                                                                                   && \
     rm -rf pguri
 
+RUN apk add nodejs
+
 WORKDIR /code

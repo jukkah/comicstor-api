@@ -1,0 +1,27 @@
+{
+  "name": "comicstor-api",
+  "version": "0.1.0",
+  "description": "",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "start": "sh start-api.sh",
+    "heroku-postbuild": "sh load-schema.sh",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jukkah/comicstor-api.git"
+  },
+  "author": "Jukka Hyytiälä",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jukkah/comicstor-api/issues"
+  },
+  "homepage": "https://github.com/jukkah/comicstor-api#readme",
+  "devDependencies": {
+    "pg": "^7.4.0"
+  }
+}

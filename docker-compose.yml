@@ -12,6 +12,7 @@ services:
       - ./docker/db/entrypoint.sh:/usr/local/bin/entrypoint.sh
     environment:
       POSTGRES_PASSWORD: example
+      DATABASE_URL: postgres://postgres:example@db:5432/postgres
   api:
     build:
       context: docker/api
@@ -22,6 +23,8 @@ services:
       - db
     ports:
       - 5000:5000
+    environment:
+      DATABASE_URL: postgres://postgres:example@db:5432/postgres
 
 volumes:
   db-data:
