@@ -24,7 +24,7 @@
     "url": "https://github.com/jukkah/comicstor-api/issues"
   },
   "homepage": "https://github.com/jukkah/comicstor-api#readme",
-  "devDependencies": {
+  "dependencies": {
     "pg": "^7.4.0"
   }
 }
