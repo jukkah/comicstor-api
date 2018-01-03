@@ -2,6 +2,19 @@
 
 CREATE EXTENSION IF NOT EXISTS pgcrypto;
 
+--------------------------------------------------------------------------------
+
+-- This function must be declared before policies on tables
+-- Get current user id
+DROP FUNCTION IF EXISTS comicstor.current_user_id() CASCADE;
+CREATE FUNCTION comicstor.current_user_id() RETURNS INTEGER AS $$
+SELECT current_setting('jwt.claims.user_id', TRUE) :: INTEGER
+$$ LANGUAGE SQL STABLE;
+
+GRANT EXECUTE ON FUNCTION comicstor.current_user_id() TO comicstor_anonymous, comicstor_user;
+
+--------------------------------------------------------------------------------
+
 DO LANGUAGE plpgsql $wrapper$
 BEGIN
 
@@ -98,16 +111,6 @@ END;
 $$ LANGUAGE plpgsql STRICT SECURITY DEFINER STABLE;
 
 GRANT EXECUTE ON FUNCTION comicstor.authenticate(TEXT, TEXT) TO comicstor_anonymous, comicstor_user;
-
---------------------------------------------------------------------------------
-
--- Get current user id
-DROP FUNCTION IF EXISTS comicstor.current_user_id() CASCADE;
-CREATE FUNCTION comicstor.current_user_id() RETURNS INTEGER AS $$
-  SELECT current_setting('jwt.claims.user_id', TRUE) :: INTEGER
-$$ LANGUAGE SQL STABLE;
-
-GRANT EXECUTE ON FUNCTION comicstor.current_user_id() TO comicstor_anonymous, comicstor_user;
 
 --------------------------------------------------------------------------------
 
