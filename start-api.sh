@@ -6,5 +6,4 @@ postgraphql \
     --schema comicstor \
     --default-role comicstor_anonymous \
     --secret keyboard_kitten \
-    --token comicstor.jwt_token \
-    --watch
+    --token comicstor.jwt_token
