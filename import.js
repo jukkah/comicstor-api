@@ -9,10 +9,10 @@ const fs = require('fs');
  * @returns String output with values
  */
 function replaceEnvVars(text) {
-    for (name in Object.getOwnPropertyNames(process.env)) {
+    Object.keys(process.env).forEach((name) => {
         const value = process.env[name];
         text = text.replace(new RegExp(`\\$(${name}|\\{${name}\\})`, 'g'), value);
-    }
+    });
 
     return text;
 }
