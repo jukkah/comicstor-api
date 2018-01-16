@@ -1,7 +1,7 @@
 #!/bin/sh
 
-postgraphql \
-    -n 0.0.0.0 \
+./node_modules/.bin/postgraphql \
+    -p ${PORT} \
     --connection ${DATABASE_URL} \
     --schema comicstor \
     --default-role comicstor_anonymous \

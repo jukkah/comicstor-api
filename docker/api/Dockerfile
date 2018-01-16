@@ -1,4 +1,4 @@
-FROM postgraphql/postgraphql
+FROM node:8-alpine
 
 WORKDIR /
 

@@ -5,9 +5,9 @@ BEGIN
 
   -- Internal user for connecting from api to db
   IF NOT EXISTS (SELECT 1 FROM pg_roles WHERE rolname='comicstor_postgraphql') THEN
-    CREATE ROLE comicstor_postgraphql LOGIN PASSWORD 'xyz';
+    CREATE ROLE comicstor_postgraphql LOGIN PASSWORD '${COMICSTOR_POSTGRAPHQL_PASSWORD}';
   ELSE
-    ALTER ROLE comicstor_postgraphql LOGIN PASSWORD 'xyz';
+    ALTER ROLE comicstor_postgraphql LOGIN PASSWORD '${COMICSTOR_POSTGRAPHQL_PASSWORD}';
   END IF;
 
   -- Anonymous user role

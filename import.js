@@ -1,6 +1,22 @@
 const { Client } = require('pg');
 const fs = require('fs');
 
+/**
+ * Find and replace environment variables by their values in text and then
+ * return it.
+ *
+ * @param {String} text input with placeholders
+ * @returns String output with values
+ */
+function replaceEnvVars(text) {
+    for (name in Object.getOwnPropertyNames(process.env)) {
+        const value = process.env[name];
+        text = text.replace(new RegExp(`\\$(${name}|\\{${name}\\})`, 'g'), value);
+    }
+
+    return text;
+}
+
 const client = new Client({
     connectionString: process.env.DATABASE_URL,
     ssl: process.env.NODE_ENV === 'production',
@@ -12,6 +28,8 @@ fs.readFile('/tmp/import.sql', 'utf8', function (err, data) {
         console.log(err);
         process.exit(1);
     }
+
+    data = replaceEnvVars(data);
 
     client.query(data, (err, res) => {
         if (err) {

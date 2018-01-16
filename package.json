@@ -25,6 +25,7 @@
   },
   "homepage": "https://github.com/jukkah/comicstor-api#readme",
   "dependencies": {
-    "pg": "^7.4.0"
+    "pg": "^7.4.0",
+    "postgraphql": "^3.5.4"
   }
 }
