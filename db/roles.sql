@@ -13,14 +13,14 @@ BEGIN
   -- Anonymous user role
   IF NOT EXISTS (SELECT 1 FROM pg_roles WHERE rolname='comicstor_anonymous') THEN
     CREATE ROLE comicstor_anonymous;
-    GRANT comicstor_anonymous TO comicstor_postgraphql;
   END IF;
+  GRANT comicstor_anonymous TO comicstor_postgraphql;
 
   -- Authenticated user role
   IF NOT EXISTS (SELECT 1 FROM pg_roles WHERE rolname='comicstor_user') THEN
     CREATE ROLE comicstor_user;
-    GRANT comicstor_user TO comicstor_postgraphql;
   END IF;
+  GRANT comicstor_user TO comicstor_postgraphql;
 
 END;
 $wrapper$;
