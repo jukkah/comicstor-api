@@ -18,7 +18,7 @@ function replaceEnvVars(text) {
 }
 
 const client = new Client({
-    connectionString: process.env.DATABASE_URL,
+    connectionString: process.env.DATABASE_URL_ROOT,
     ssl: process.env.NODE_ENV === 'production',
 });
 client.connect();
