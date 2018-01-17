@@ -10,7 +10,7 @@
     "node": "^8.0.0"
   },
   "scripts": {
-    "start": "sh start-api.sh",
+    "start": "node index.js",
     "heroku-postbuild": "sh load-schema.sh",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
